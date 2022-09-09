@@ -2,21 +2,17 @@ class Node {
     constructor(val){
         this.val = val;
         this.next = null;
-        // this.prev = prev;
     }
 }
 
 class MyLinkedList{
-    constructor(head = null){
+    constructor(head = null, length){
         this.head = head;
-        // this.head = new Node();
-        // this.tail = new Node();
-        this.length = 0;
-        // this.head.next = this.tail;
-        // this.tail.prev = this.head;
+        this.length = length;
     }
 
     size(){
+
         return this.length;
     }
 
@@ -32,29 +28,17 @@ class MyLinkedList{
         
     }
     
-    add(newElement, element){
+    add(newElement){
+        var currNode = this.head;
         var newNode = new Node(newElement);
-        var current = this.find(element);
 
-        newNode.next = current.next;
-        current = newNode;
+        while(currNode.next){
+            currNode = currNode.next;
+        }
+
+        currNode.next = newNode; 
 
         this.length++;
-
-        // var node = new Node();
-        
-        // if(this.head === null){
-        //     this.head = node;
-        // }else{
-        //     var currentNode = this.head;
-
-        //     while(currentNode.next){
-        //         currentNode = currentNode.next;
-        //     }
-
-        //     currentNode.next = node;
-        // }
-        // this.length++;
     }
 
     get(index){
@@ -70,11 +54,12 @@ class MyLinkedList{
             tempIndex++;
         }
 
-        return currentNode;
+        return currentNode.val;
     }
 
-    addAtHead(val){
-        let newNode = new Node(val);
+    addAtHead(newElement){
+        let newNode = new Node(newElement);
+
         if(this.head){
             newNode.next = this.head;
         }
@@ -84,25 +69,13 @@ class MyLinkedList{
     }
 
     addAtTail(val){
-        let newNode = new Node(val);
+
+    this.add(val);
     
-    if(!this.head){
-        this.head = newNode;
-        this.length++;
-        return this.head;
-    }
-
-    let tail = this.head;
-    while(tail.next != null){
-        tail = tail.next;
-    }
-
-    tail.next = newNode;
-    return this.head;
     }
 
     addAtIndex(index, val){
-        if(this.length == 0) return;
+        if(this.length === 0) return;
 
         if(!this.head) return null;
         
@@ -120,21 +93,23 @@ class MyLinkedList{
     }
 
     deleteAtIndex(index){
-        if(this.length == 0) return;
+        let tempIndex = 0;
+        if(this.length === 0) return;
 
         if(!this.head) return null;
 
-        let current = this.head;
+        let currentNode = this.head;
 
-        while(current.next){
-            if(current.val == index){
-                current.val = current.next.value;
-                current.next = current.next.next;
+        while(currentNode.next){
+            if(tempIndex == index){
+                currentNode.val = currentNode.next.val;
+                currentNode.next = currentNode.next.next;
             }
-            current = current.next;
+            tempIndex++;
+            currentNode = currentNode.next;
         }
 
-        return current;
+        return currentNode;
     }
 
 
@@ -151,20 +126,26 @@ node3.next = node4;
 let node5 = new Node(5);
 node4.next = node5;
 
-var listExample = new MyLinkedList(node1);
-console.log('listExample :', listExample);
+var listExample = new MyLinkedList(node1, 5);
+// console.log('listExample :', listExample);
+// console.log('listExample :', listExample.size());
 // listExample.add(1)
 // listExample.add(2)
 // listExample.add(3)
 // listExample.add(4)
 // listExample.add(5)
-// console.log(listExample.addAtHead(7));
+console.log('addAtHead: ' + listExample.addAtHead(1));
+console.log('addAtTail: ' + listExample.addAtTail(3));
+console.log('addAtIndex' + listExample.addAtIndex(1,2));
+console.log('get: ' + listExample.get(1));
+console.log('deleteAtIndex: ' + listExample.deleteAtIndex(1));
+console.log('get: ' , listExample.get(1));
 // console.log('listExample :', listExample.size());
 // console.log(listExample.addAtTail(9));
+// console.log('listExample :', listExample);
 // console.log('listExample :', listExample.size());
 // console.log(listExample.addAtIndex(3,5));
 // console.log('listExample :', listExample.size());
 // console.log(listExample.deleteAtIndex(2));
 // console.log('listExample :', listExample.size());
-// console.log(listExample.find(2));
-// console.log(listExample.get(2));
+// console.log(listExample.find(9));
