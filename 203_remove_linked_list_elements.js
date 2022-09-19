@@ -12,6 +12,7 @@ class MyLinkedList{
     }
 
 }
+
 var myLinkedList = new MyLinkedList(head);
 
 var removeElements = function(head, val) {
