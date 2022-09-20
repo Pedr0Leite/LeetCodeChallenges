@@ -26,7 +26,6 @@ var levelOrder = function(root) {
             if (cur.right) stack.push(cur.right);
         }
         
-        console.log('tempLevel :', tempLevel);
         res.push(tempLevel.concat())
         
     }
